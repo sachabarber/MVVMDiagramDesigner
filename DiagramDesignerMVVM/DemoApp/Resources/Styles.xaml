@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <ControlTemplate x:Key="infoButtonTemplate" TargetType="Button">
+        <Grid x:Name="grid" Opacity="0.5">
+            <Ellipse Width="16"
+                     Height="16"
+                     Stroke="Black"
+                     StrokeThickness="2"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center"
+                     Fill="White"/>
+            <Label Content="i"
+                   FontWeight="Bold"
+                   FontStyle="Italic"
+                   HorizontalAlignment="Center"
+                   HorizontalContentAlignment="Center"
+                   VerticalAlignment="Center"
+                   VerticalContentAlignment="Center"
+                   FontSize="12" />
+        </Grid>
+        
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter TargetName="grid"
+                        Property="Opacity"
+                        Value="1.0" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+        
+    </ControlTemplate>
+</ResourceDictionary>

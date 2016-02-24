@@ -1,0 +1,40 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:DemoApp">
+
+    <!-- DataTemplate for DesignerCanvas look and feel -->
+    <DataTemplate DataType="{x:Type local:SettingsDesignerItemViewModel}">
+            <Grid>
+            <Image IsHitTestVisible="False"
+                    Stretch="Fill"
+                    Source="../../Images/Setting.png"
+                    Tag="setting" />
+            <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="5"
+                    Template="{StaticResource infoButtonTemplate}"
+                    Command="{Binding ShowDataChangeWindowCommand}" />
+        </Grid>
+    </DataTemplate>
+
+    <!-- DataTemplate for Popup look and feel -->
+    <DataTemplate DataType="{x:Type local:SettingsDesignerItemData}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0"
+                    Content="Setting1"
+                    Margin="5" />
+            <TextBox Grid.Row="1"
+                        HorizontalAlignment="Left"
+                        Text="{Binding Setting1}"
+                        Width="150"
+                        Margin="5" />
+        </Grid>
+    </DataTemplate>
+
+
+</ResourceDictionary>
