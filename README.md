@@ -17,3 +17,7 @@ Features are
 Here is a screen shot to show you what it looks like
 
 <img src="http://www.codeproject.com/KB/WPF/484616/demoAppSmall.png"/>
+
+
+
+<strong>Old code is maintained here until I have worked throuigh grouping with codeproject user <a href="https://dl.dropboxusercontent.com/u/2600965/Blogposts/2012/DiagramDesignerMVVM.zip" target="_blank">https://dl.dropboxusercontent.com/u/2600965/Blogposts/2012/DiagramDesignerMVVM.zip</a>
