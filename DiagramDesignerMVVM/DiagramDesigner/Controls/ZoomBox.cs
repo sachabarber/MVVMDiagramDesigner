@@ -13,6 +13,8 @@ namespace DiagramDesigner
         private Canvas zoomCanvas;
         private Slider zoomSlider;
         private ScaleTransform scaleTransform;
+        private double mouseOffsetX = 0.0;
+        private double mouseOffsety = 0.0;
 
         #region DPs
 
@@ -98,6 +100,7 @@ namespace DiagramDesigner
 
         private void ZoomSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            
             double scale = e.NewValue / e.OldValue;
             double halfViewportHeight = this.ScrollViewer.ViewportHeight / 2;
             double newVerticalOffset = ((this.ScrollViewer.VerticalOffset + halfViewportHeight) * scale - halfViewportHeight);
@@ -133,7 +136,7 @@ namespace DiagramDesigner
            
             //divide the value by 10 so that it is more smooth
             double value = Math.Max(0, wheel.Delta / 10);
-            value = Math.Min(wheel.Delta, 10);
+            value = Math.Min(wheel.Delta/12, 10);
             this.zoomSlider.Value += value;
         }
 

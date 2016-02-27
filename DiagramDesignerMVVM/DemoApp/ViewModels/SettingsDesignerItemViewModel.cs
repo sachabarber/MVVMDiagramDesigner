@@ -12,8 +12,16 @@ namespace DemoApp
     {
         private IUIVisualizerService visualiserService;
 
-        public SettingsDesignerItemViewModel(int id, DiagramViewModel parent, double left, double top, string setting1)
+        public SettingsDesignerItemViewModel(int id, IDiagramViewModel parent, double left, double top, string setting1)
             : base(id, parent, left, top)
+        {
+
+            this.Setting1 = setting1;
+            Init();
+        }
+
+        public SettingsDesignerItemViewModel(int id, IDiagramViewModel parent, double left, double top, double itemWidth, double itemHeight, string setting1)
+             : base(id, parent, left, top, itemWidth, itemHeight)
         {
 
             this.Setting1 = setting1;
