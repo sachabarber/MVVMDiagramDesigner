@@ -43,7 +43,9 @@
     <Compile Include="Connection.cs" />
     <Compile Include="DesignerItemBase.cs" />
     <Compile Include="DiagramItem.cs" />
+    <Compile Include="GroupDesignerItem.cs" />
     <Compile Include="IDatabaseAccessService.cs" />
+    <Compile Include="IDiagramItem.cs" />
     <Compile Include="Orientation.cs" />
     <Compile Include="PersistDesignerItem.cs" />
     <Compile Include="PersitableItemBase.cs" />

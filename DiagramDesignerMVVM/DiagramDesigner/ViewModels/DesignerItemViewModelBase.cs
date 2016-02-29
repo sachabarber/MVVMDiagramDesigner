@@ -17,8 +17,8 @@ namespace DiagramDesigner
         private bool showConnectors = false;
         private List<FullyCreatedConnectorInfo> connectors = new List<FullyCreatedConnectorInfo>();
 
-        private static double itemWidth = 65;
-        private static double itemHeight = 65;
+        private double itemWidth = 65;
+        private double itemHeight = 65;
 
         public DesignerItemViewModelBase(int id, IDiagramViewModel parent, double left, double top) : base(id, parent)
         {
@@ -27,11 +27,51 @@ namespace DiagramDesigner
             Init();
         }
 
+        public DesignerItemViewModelBase(int id, IDiagramViewModel parent, double left, double top, double itemWidth, double itemHeight) : base(id, parent)
+        {
+            this.left = left;
+            this.top = top;
+            this.itemWidth = itemWidth;
+            this.itemHeight = itemHeight;
+            Init();
+        }
+
         public DesignerItemViewModelBase(): base()
         {
             Init();
         }
 
+        public double ItemWidth
+        {
+            get
+            {
+                return itemWidth;
+            }
+            set
+            {
+                if (itemWidth != value)
+                {
+                    itemWidth = value;
+                    NotifyChanged("ItemWidth");
+                }
+            }
+        }
+
+        public double ItemHeight
+        {
+            get
+            {
+                return itemHeight;
+            }
+            set
+            {
+                if (itemHeight != value)
+                {
+                    itemHeight = value;
+                    NotifyChanged("ItemHeight");
+                }
+            }
+        }
 
         public FullyCreatedConnectorInfo TopConnector
         {
@@ -56,17 +96,6 @@ namespace DiagramDesigner
             get { return connectors[3]; }
         }
 
-
-
-        public static double ItemWidth
-        {
-            get { return itemWidth; }
-        }
-
-        public static double ItemHeight
-        {
-            get { return itemHeight; }
-        }
 
         public bool ShowConnectors
         {
@@ -129,6 +158,6 @@ namespace DiagramDesigner
             connectors.Add(new FullyCreatedConnectorInfo(this, ConnectorOrientation.Left));
             connectors.Add(new FullyCreatedConnectorInfo(this, ConnectorOrientation.Right));
         }
-        
+
     }
 }

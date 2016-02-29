@@ -83,6 +83,11 @@ namespace DemoApp.Persistence.RavenDB
             return SaveItem(settingsDesignerItemToSave);
         }
 
+        public int SaveGroupingDesignerItem(GroupDesignerItem groupDesignerItemToSave)
+        {
+            return SaveItem(groupDesignerItemToSave);
+        }
+
         public int SaveConnection(Connection connectionToSave)
         {
             return SaveItem(connectionToSave);
@@ -120,6 +125,13 @@ namespace DemoApp.Persistence.RavenDB
             }
         }
 
+        public GroupDesignerItem FetchGroupingDesignerItem(int groupDesignerItemId)
+        {
+            using (IDocumentSession session = documentStore.OpenSession())
+            {
+                return session.Query<GroupDesignerItem>().Single(x => x.Id == groupDesignerItemId);
+            }
+        }
         public Connection FetchConnection(int connectionId)
         {
             using (IDocumentSession session = documentStore.OpenSession())

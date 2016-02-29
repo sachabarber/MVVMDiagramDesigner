@@ -7,7 +7,8 @@ namespace DemoApp.Persistence.Common
 {
     public class PersistDesignerItem : DesignerItemBase
     {
-        public PersistDesignerItem(int id, double left, double top, string hostUrl) : base(id, left, top)
+        public PersistDesignerItem(int id, double left, double top, double itemWidth, double itemHeight, string hostUrl) 
+            : base(id, left, top, itemWidth, itemHeight)
         {
             this.HostUrl = hostUrl;
         }
