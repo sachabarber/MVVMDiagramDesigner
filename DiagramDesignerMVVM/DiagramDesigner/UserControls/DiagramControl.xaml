@@ -115,6 +115,7 @@
                                     Value="{Binding Area.Left}" />
                             <Setter Property="s:SelectionProps.EnabledForSelection"
                                     Value="True" />
+                            <Setter Property="IsHitTestVisible" Value="{Binding Path=IsFullConnection}" />
                             <Setter Property="ContentTemplate">
                                 <Setter.Value>
                                     <DataTemplate>

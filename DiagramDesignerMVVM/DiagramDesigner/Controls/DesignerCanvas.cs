@@ -19,6 +19,7 @@ namespace DiagramDesigner
         private List<Connector> connectorsHit = new List<Connector>();
         private Connector sourceConnector;
         private Point? rubberbandSelectionStartPoint = null;
+        private Point? initialDragPoint;
 
         public DesignerCanvas()
         {
@@ -52,25 +53,33 @@ namespace DiagramDesigner
         {
             base.OnMouseDown(e);
 
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (this.DataContext is DesignerItemViewModelBase)
             {
-                //if we are source of event, we are rubberband selecting
-                if (e.Source == this)
-                {
-                    // in case that this click is the start for a 
-                    // drag operation we cache the start point
-                    rubberbandSelectionStartPoint = e.GetPosition(this);
-
-                    IDiagramViewModel vm = (this.DataContext as IDiagramViewModel);
-                    if (!(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-                    {
-                        vm.ClearSelectedItemsCommand.Execute(null);
-                    }
-                    e.Handled = true;
-                }
+                initialDragPoint = e.GetPosition(this);
+                Mouse.SetCursor(Cursors.SizeAll);
+                e.Handled = true;
             }
+            else
+            {
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    //if we are source of event, we are rubberband selecting
+                    if (e.Source == this)
+                    {
+                        // in case that this click is the start for a 
+                        // drag operation we cache the start point
+                        rubberbandSelectionStartPoint = e.GetPosition(this);
 
+                        IDiagramViewModel vm = (this.DataContext as IDiagramViewModel);
+                        if (!(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+                        {
+                            vm.ClearSelectedItemsCommand.Execute(null);
+                        }
+                        e.Handled = true;
+                    }
+                }
 
+            }
         }
 
         protected override void OnMouseUp(MouseButtonEventArgs e)
@@ -82,7 +91,7 @@ namespace DiagramDesigner
             if (sourceConnector != null)
             {
                 FullyCreatedConnectorInfo sourceDataItem = sourceConnector.DataContext as FullyCreatedConnectorInfo;
-                if (connectorsHit.Count() == 2)
+                if (connectorsHit.Count() >= 2)
                 {
                     Connector sinkConnector = connectorsHit.Last();
                     FullyCreatedConnectorInfo sinkDataItem = sinkConnector.DataContext as FullyCreatedConnectorInfo;
@@ -122,20 +131,55 @@ namespace DiagramDesigner
             {
                 // if mouse button is not pressed we have no drag operation, ...
                 if (e.LeftButton != MouseButtonState.Pressed)
-                    rubberbandSelectionStartPoint = null;
-
-                // ... but if mouse button is pressed and start
-                // point value is set we do have one
-                if (this.rubberbandSelectionStartPoint.HasValue)
                 {
-                    // create rubberband adorner
-                    AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(this);
-                    if (adornerLayer != null)
+                    rubberbandSelectionStartPoint = null;
+                    initialDragPoint = null;
+                }
+
+                if (this.initialDragPoint.HasValue && this.DataContext is DesignerItemViewModelBase)
+                {
+                    Mouse.SetCursor(Cursors.SizeAll);
+                    DesignerItemViewModelBase item = (DesignerItemViewModelBase)this.DataContext;
+                    double minLeft = double.MaxValue;
+                    double minTop = double.MaxValue;
+                    Point currentPoint = e.GetPosition(this);
+
+                    IDiagramViewModel designerCanvas = item.Parent as IDiagramViewModel;
+                    Rect rekt = PointHelper.GetBoundingRectangle(designerCanvas.Items, 10);
+
+                    double left = item.Left;
+                    double top = item.Top;
+                    minLeft = double.IsNaN(left) ? 0 : Math.Min(left, minLeft);
+                    minTop = double.IsNaN(top) ? 0 : Math.Min(top, minTop);
+
+                    double deltaHorizontal = Math.Max(-minLeft, currentPoint.X - initialDragPoint.Value.X);
+                    double deltaVertical = Math.Max(-minTop, currentPoint.Y - initialDragPoint.Value.Y);
+                    item.Left += deltaHorizontal;
+                    item.Top += deltaVertical;
+
+                    if (item.Parent is IDiagramViewModel && item.Parent is DesignerItemViewModelBase)
                     {
-                        RubberbandAdorner adorner = new RubberbandAdorner(this, rubberbandSelectionStartPoint);
-                        if (adorner != null)
+                        DesignerItemViewModelBase groupItem = (DesignerItemViewModelBase)item.Parent;
+                        if (item.Left + item.ItemWidth >= groupItem.ItemWidth) item.Left = groupItem.ItemWidth - item.ItemWidth;
+                        if (item.Top + item.ItemHeight >= groupItem.ItemHeight) item.Top = groupItem.ItemHeight - item.ItemHeight;
+                    }
+                    e.Handled = true;
+                }
+                else
+                {
+                    // ... but if mouse button is pressed and start
+                    // point value is set we do have one
+                    if (this.rubberbandSelectionStartPoint.HasValue)
+                    {
+                        // create rubberband adorner
+                        AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(this);
+                        if (adornerLayer != null)
                         {
-                            adornerLayer.Add(adorner);
+                            RubberbandAdorner adorner = new RubberbandAdorner(this, rubberbandSelectionStartPoint);
+                            if (adorner != null)
+                            {
+                                adornerLayer.Add(adorner);
+                            }
                         }
                     }
                 }
@@ -179,7 +223,9 @@ namespace DiagramDesigner
             {
                 if (hitObject is Connector)
                 {
-                    if (!connectorsHit.Contains(hitObject as Connector))
+                    if (!connectorsHit.Contains(hitObject as Connector) &&
+                        ((FullyCreatedConnectorInfo)(hitObject as Connector).DataContext).DataItem.Parent == 
+                        ((FullyCreatedConnectorInfo)SourceConnector.DataContext).DataItem.Parent)
                         connectorsHit.Add(hitObject as Connector);
                 }
                 hitObject = VisualTreeHelper.GetParent(hitObject);
