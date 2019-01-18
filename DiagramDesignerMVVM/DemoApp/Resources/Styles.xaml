@@ -30,4 +30,22 @@
         </ControlTemplate.Triggers>
         
     </ControlTemplate>
+
+
+    <SolidColorBrush x:Key="GroupStroke" Color="#FF7C7C7C"/>
+    <LinearGradientBrush x:Key="GroupBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#FFF4F4F4" Offset="0" />
+        <GradientStop Color="#FFD0D0D0" Offset="1" />
+    </LinearGradientBrush>
+
+    <!-- Grouping -->
+    <Style x:Key="Grouping" TargetType="Shape">
+        <Setter Property="Fill" Value="{StaticResource GroupBrush}" />
+        <Setter Property="Stroke" Value="{StaticResource GroupStroke}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeLineJoin" Value="Round" />
+        <Setter Property="Stretch" Value="Fill" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
 </ResourceDictionary>

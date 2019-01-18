@@ -24,7 +24,10 @@
                     Content="Save"
                     Margin="8,0,3,0"
                     Command="{Binding SaveDiagramCommand}" />
-
+            <Button ToolTip="Ungroup/Group"
+                    Content="Ungroup/Group"
+                    Margin="8,0,3,0"
+                    Command="{Binding GroupCommand}" />
             <Label Margin="30,0,3,0"
                    VerticalAlignment="Center"
                    Content="Saved Diagrams" />

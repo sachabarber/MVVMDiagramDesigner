@@ -83,6 +83,7 @@
     <Compile Include="UserControls\ToolBoxControl.xaml.cs">
       <DependentUpon>ToolBoxControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\GroupingDesignerItemViewModel.cs" />
     <Compile Include="ViewModels\ToolBoxViewModel.cs" />
     <Compile Include="ViewModels\SettingsDesignerItemData.cs" />
     <Compile Include="ViewModels\ISupportDataChanges.cs" />
@@ -139,6 +140,10 @@
     <Page Include="Popups\PopupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\DesignerItems\GroupingDesignerItemDataTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\DesignerItems\SettingsDesignerItemDataTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>

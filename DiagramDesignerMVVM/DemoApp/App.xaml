@@ -1,12 +1,11 @@
-﻿
-    <Application x:Class="DemoApp.App"
+﻿<Application x:Class="DemoApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="Window1.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                
+
                 <!-- DiagramDesigner Dll resources, you need all of these -->
                 <ResourceDictionary Source="pack://application:,,,/DiagramDesigner;component/Resources/Styles/Shared.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/DiagramDesigner;component/Resources/Styles/ScrollBar.xaml" />
@@ -19,10 +18,11 @@
 
                 <!-- Common DemoApp Styles -->
                 <ResourceDictionary Source="Resources/Styles.xaml" />
-                
+
                 <!-- specific designer items, you should have one of these per ViewModel that you want to represent on diagram -->
                 <ResourceDictionary Source="Resources/DesignerItems/SettingsDesignerItemDataTemplate.xaml" />
                 <ResourceDictionary Source="Resources/DesignerItems/PersistDesignerItemDataTemplate.xaml" />
+                <ResourceDictionary Source="Resources/DesignerItems/GroupingDesignerItemDataTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
